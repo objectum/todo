@@ -1,0 +1,132 @@
+{
+	"createModel": [
+		{
+			"name": "Item",
+			"code": "item",
+			"opts": {
+				"after_insert_or_update": "NEW.{date} = current_timestamp"
+			}
+		},
+		{
+			"parent": "d",
+			"name": "Item",
+			"code": "item"
+		},
+		{
+			"parent": "d.item",
+			"name": "Category",
+			"code": "category"
+		},
+		{
+			"parent": "t",
+			"name": "Item",
+			"code": "item"
+		},
+		{
+			"parent": "t.item",
+			"name": "File",
+			"code": "file"
+		}
+	],
+	"createProperty": [
+		{
+			"model": "item",
+			"name": "user",
+			"code": "user",
+			"type": "objectum.user",
+            "notNull": true,
+            "removeRule": "cascade"
+		},
+		{
+			"model": "item",
+			"name": "Name",
+			"code": "name",
+			"type": "string",
+			"notNull": true
+		},
+		{
+			"model": "item",
+			"name": "Date",
+			"code": "date",
+			"type": "date",
+			"notNull": true
+		},
+		{
+			"model": "item",
+			"name": "Done",
+			"code": "done",
+			"type": "date"
+		},
+		{
+			"model": "item",
+			"name": "Important",
+			"code": "important",
+			"type": "date"
+		},
+		{
+			"model": "item",
+			"name": "Note",
+			"code": "note",
+			"type": "string",
+			"opts": {
+				"textarea": true
+			}
+		},
+		{
+			"model": "item",
+			"name": "Category",
+			"code": "category",
+			"type": "d.item.category"
+		},
+		{
+			"model": "d.item.category",
+			"name": "Name",
+			"code": "name",
+			"type": "string",
+			"notNull": true
+		},
+		{
+			"model": "d.item.category",
+			"name": "Color",
+			"code": "color",
+			"type": "string"
+		},
+		{
+			"model": "t.item.file",
+			"name": "Item",
+			"code": "item",
+			"type": "item",
+			"notNull": true,
+			"removeRule": "cascade"
+		},
+		{
+			"model": "t.item.file",
+			"name": "File",
+			"code": "file",
+			"type": "file",
+			"notNull": true
+		}
+	],
+	"createRecord": [
+		{
+			"_model": "d.item.category",
+			"name": "Green",
+			"color": "#c3fbd8"
+		},
+		{
+			"_model": "d.item.category",
+			"name": "Pink",
+			"color": "#ffd1dc"
+		},
+		{
+			"_model": "d.item.category",
+			"name": "Blue",
+			"color": "#c6d8ff"
+		},
+		{
+			"_model": "d.item.category",
+			"name": "Yellow",
+			"color": "#fffadd"
+		}
+	]
+}

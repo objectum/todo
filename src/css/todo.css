@@ -1,0 +1,24 @@
+body, html {
+    background: linear-gradient(to bottom, #def7fe 0%, #ffffff 100%) fixed;
+}
+.todo-check {
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 0.75em;
+}
+.todo-name {
+    width: 100% !important;
+    vertical-align: middle !important;
+    padding: 0.75em;
+}
+.todo-cursor {
+    cursor: pointer;
+}
+.todo-star {
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 0.75em;
+}
+.todo-item {
+    width: 30em;
+}

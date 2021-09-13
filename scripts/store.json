@@ -2,10 +2,7 @@
 	"createModel": [
 		{
 			"name": "Item",
-			"code": "item",
-			"opts": {
-				"after_insert_or_update": "NEW.{date} = current_timestamp"
-			}
+			"code": "item"
 		},
 		{
 			"parent": "d",
@@ -16,6 +13,11 @@
 			"parent": "d.item",
 			"name": "Category",
 			"code": "category"
+		},
+		{
+			"parent": "d.item",
+			"name": "Type",
+			"code": "type"
 		},
 		{
 			"parent": "t",
@@ -34,7 +36,6 @@
 			"name": "user",
 			"code": "user",
 			"type": "objectum.user",
-            "notNull": true,
             "removeRule": "cascade"
 		},
 		{
@@ -74,9 +75,22 @@
 		},
 		{
 			"model": "item",
+			"name": "Type",
+			"code": "type",
+			"type": "d.item.type"
+		},
+		{
+			"model": "item",
 			"name": "Category",
 			"code": "category",
-			"type": "d.item.category"
+			"type": "string"
+		},
+		{
+			"model": "d.item.type",
+			"name": "Name",
+			"code": "name",
+			"type": "string",
+			"notNull": true
 		},
 		{
 			"model": "d.item.category",
@@ -109,6 +123,14 @@
 	],
 	"createRecord": [
 		{
+			"_model": "d.item.type",
+			"name": "Task"
+		},
+		{
+			"_model": "d.item.type",
+			"name": "Note"
+		},
+		{
 			"_model": "d.item.category",
 			"name": "Green",
 			"color": "#c3fbd8"
@@ -127,6 +149,16 @@
 			"_model": "d.item.category",
 			"name": "Yellow",
 			"color": "#fffadd"
+		}
+	],
+	"updateModel": [
+		{
+			"id": "item",
+			"opts": {
+				"trigger": {
+					"before_insert_or_update": "NEW.{date} = current_timestamp;"
+				}
+			}
 		}
 	]
 }

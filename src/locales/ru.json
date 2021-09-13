@@ -2,5 +2,8 @@
     "home": "To Do",
     "add task": "добавить задачу",
     "completed": "завершенные",
-    "important:": "важно"
+    "important:": "важно",
+    "category": "категория",
+    "note": "заметка",
+    "files attached": "вложены файлы"
 }

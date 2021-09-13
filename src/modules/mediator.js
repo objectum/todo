@@ -1,7 +1,7 @@
 /* eslint-disable no-whitespace-before-property */
 /* eslint-disable eqeqeq */
 
-import {execute} from "objectum-client";
+import {execute, Record} from "objectum-client";
 
 let store;
 let data = {};
@@ -52,6 +52,14 @@ function isExpert () {
 		return true;
 	}
 	return false;
+}
+
+Record.prototype.getLabel = function () {
+	if (this.name) {
+		return this.name;
+	} else {
+		return this.id;
+	}
 }
 
 const opts = {

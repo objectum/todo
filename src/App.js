@@ -17,6 +17,7 @@ Object.assign (locales.ru, ru);
 export default function App () {
 	let opts = {
 		store,
+		registration: true,
 		name: process.env.REACT_APP_NAME || "todo",
 		version: process.env.REACT_APP_VERSION
 	};

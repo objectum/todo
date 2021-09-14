@@ -167,35 +167,27 @@ export default function ToDo () {
 						</Group>
 						<Field property="note" hideLabel />
 					</Form>
-					<div className="">
-						{fileRecords.filter (record => record.item == item).map ((record, i) => {
-							return <div key={i} className="p-1 d-flex align-items-center">
-								<Action icon="fas fa-times" btnClassName="btn btn-link p-0 text-danger mr-1" title={i18n ("Remove")}
-									store={store} transaction hideProgress onClick={async () => {
-										await store.removeRecord (record.id);
-										setFileRecords (fileRecords.filter (fileRecord => fileRecord.id != record.id));
-									}}
-								/>
-								<a href={record.getRef ("file")} target="_blank" rel="noreferrer">{record.file}</a>
-							</div>;
-						})}
-						{!uploading && <FileField onChange={async ({value, file}) => {
+					{fileRecords.filter (record => record.item == item).map ((record, i) => {
+						return <div key={i} className="p-1 d-flex align-items-center">
+							<Action icon="fas fa-times" btnClassName="btn btn-link p-0 text-danger mr-1" title={i18n ("Remove")}
+								store={store} transaction hideProgress onClick={async () => {
+									await store.removeRecord (record.id);
+									setFileRecords (fileRecords.filter (fileRecord => fileRecord.id != record.id));
+								}}
+							/>
+							<a href={record.getRef ("file")} target="_blank" rel="noreferrer">{record.file}</a>
+						</div>;
+					})}
+					{!uploading && <FileField onChange={async ({value, file}) => {
+						await store.transaction (async () => {
 							setUploading (true);
-							await store.startTransaction ();
-
-							try {
-								let record = await store.createRecord ({_model: "t.item.file", item, file: value});
-								// hot reload: new file in /public/files
-								await store.upload ({recordId: record.id, propertyId: store.getProperty ("t.item.file.file").id, name: value, file});
-								await store.commitTransaction ();
-								setFileRecords ([...fileRecords, record]);
-							} catch (err) {
-								await store.rollbackTransaction ();
-								throw err;
-							}
+							let record = await store.createRecord ({_model: "t.item.file", item, file: value});
+							// hot reload: new file in /public/files
+							await store.upload ({recordId: record.id, propertyId: store.getProperty ("t.item.file.file").id, name: value, file});
+							setFileRecords ([...fileRecords, record]);
 							setUploading (false);
-						}} />}
-					</div>
+						});
+					}} />}
 				</div>}
 			</div>
 		</div>

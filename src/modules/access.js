@@ -1,6 +1,6 @@
 async function _accessFilter ({store, model, alias}) {
 	if (store.roleCode != "admin" && model.getPath () == "item") {
-		return [{[alias]: "user"}, "=", store.userId];
+		return `{"prop": "${alias}.user"} = ${store.userId}`;
 	}
 }
 async function _accessCreate ({store, model, data}) {

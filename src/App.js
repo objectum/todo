@@ -2,7 +2,7 @@
 /* eslint-disable eqeqeq */
 
 import {Store} from "objectum-client";
-import {ObjectumApp, ObjectumRoute, ModelList, locales} from "objectum-react";
+import {ObjectumApp, ObjectumRoute, ModelList, Action, locales, i18n} from "objectum-react";
 import ToDo from "./components/ToDo";
 import ItemModel from "./models/ItemModel";
 import ItemFileModel from "./models/ItemFileModel";
@@ -28,7 +28,21 @@ export default function App () {
 		store,
 		registration: true,
 		name: process.env.REACT_APP_NAME || "todo",
-		version: process.env.REACT_APP_VERSION
+		version: process.env.REACT_APP_VERSION,
+		onCustomRender: ({content}) => {
+			if (!store.getSessionId ()) {
+				return <div>
+					<div>{content}</div>
+					<div className="text-center"><Action icon="fas fa-key" label={i18n ("Create temporary account and sign in")} hideProgress onClick={async () => {
+						let {username, password} = await store.remote ({
+							model: "admin",
+							method: "createTemporaryAccount"
+						});
+						await store.auth ({username, password});
+					}} /></div>
+				</div>;
+			}
+		}
 	};
 	if (process.env.NODE_ENV === "development") {
 		opts.username = "admin";

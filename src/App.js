@@ -1,17 +1,26 @@
+/* eslint-disable no-whitespace-before-property */
+/* eslint-disable eqeqeq */
+
 import {Store} from "objectum-client";
-import {ObjectumApp, ObjectumRoute, locales} from "objectum-react";
+import {ObjectumApp, ObjectumRoute, ModelList, locales} from "objectum-react";
 import ToDo from "./components/ToDo";
+import ItemModel from "./models/ItemModel";
+import ItemFileModel from "./models/ItemFileModel";
 import mediator from "./modules/mediator";
 import ru from "./locales/ru.json";
-
 import "./css/bootstrap.css";
 import "objectum-react/lib/fontawesome/css/all.css";
 import "./css/todo.css";
 
 const store = new Store ();
 store.setUrl ("/api");
-mediator.init ({store});
+store.register ("item", ItemModel);
+store.register ("t.item.file", ItemFileModel);
+store.addListener ("connect", async () => {
+	await store.getDict ("d.item.category");
+});
 window.store = store;
+mediator.init ({store});
 Object.assign (locales.ru, ru);
 
 export default function App () {
@@ -27,6 +36,8 @@ export default function App () {
 		opts.locale = "ru";
 	}
 	return <ObjectumApp {...opts}>
-		<ObjectumRoute exact path="/" render={props => <ToDo {...props} />} />
+		<ObjectumRoute exact path="/" render={props => {
+			return store.username == "admin" ? <div className="container"><ModelList {...props} store={store} model="item" /></div> : <ToDo {...props} />;
+		}} />
 	</ObjectumApp>;
 };

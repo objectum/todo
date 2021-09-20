@@ -2,11 +2,10 @@
 /* eslint-disable eqeqeq */
 
 import {useState, useEffect, useRef} from "react";
-import {Form, Field, JsonField, BooleanField, FileField, Group, Action, Loading, i18n} from "objectum-react";
+import {Form, Field, JsonField, BooleanField, FileField, Group, Action, i18n} from "objectum-react";
 import {store} from "../modules/mediator";
 
 export default function ToDo () {
-	let [loading, setLoading] = useState (true);
 	let [creating, setCreating] = useState (false);
 	let [itemRecords, setItemRecords] = useState ([]);
 	let updateItemRecords = items => {
@@ -30,18 +29,14 @@ export default function ToDo () {
 
 	useEffect (() => {
 		async function load () {
-			updateItemRecords (await store.getRecords ({model: "item"}));
-			setFileRecords (await store.getRecords ({model: "t.item.file"}));
 			setCategoryRecords (await store.getDict ("d.item.category"));
-			setLoading (false);
+			setFileRecords (await store.getRecords ({model: "t.item.file"}));
+			updateItemRecords (await store.getRecords ({model: "item"}));
 			inputRef.current.focus ();
 		}
 		load ();
 	}, []);
 
-	if (loading) {
-		return <Loading container />;
-	}
 	async function onKeyDown (e) {
 		if (e.key === "Enter" && name) {
 			setCreating (name);

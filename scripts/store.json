@@ -33,10 +33,13 @@
 	"createProperty": [
 		{
 			"model": "item",
-			"name": "user",
+			"name": "User",
 			"code": "user",
 			"type": "objectum.user",
-            "removeRule": "cascade"
+            "removeRule": "cascade",
+			"opts": {
+				"disabled": true
+			}
 		},
 		{
 			"model": "item",
@@ -50,19 +53,31 @@
 			"name": "Date",
 			"code": "date",
 			"type": "date",
-			"notNull": true
+			"notNull": true,
+			"opts": {
+				"disabled": true,
+				"showTime": true
+			}
 		},
 		{
 			"model": "item",
 			"name": "Done",
 			"code": "done",
-			"type": "date"
+			"type": "date",
+			"opts": {
+				"disabled": true,
+				"showTime": true
+			}
 		},
 		{
 			"model": "item",
 			"name": "Important",
 			"code": "important",
-			"type": "date"
+			"type": "date",
+			"opts": {
+				"disabled": true,
+				"showTime": true
+			}
 		},
 		{
 			"model": "item",
@@ -121,6 +136,43 @@
 			"notNull": true
 		}
 	],
+	"createQuery": [
+		{
+			"name": "Item",
+			"code": "item"
+		},
+		{
+			"name": "List",
+			"code": "list",
+			"parent": "item",
+			"query": [
+				"{\"data\": \"begin\"}",
+				"select",
+				"    {\"prop\": \"a.id\", \"as\": \"id\"},",
+				"    {\"prop\": \"a.name\", \"as\": \"name\"},",
+				"    {\"prop\": \"a.date\", \"as\": \"date\"},",
+				"    {\"prop\": \"a.done\", \"as\": \"done\"},",
+				"    {\"prop\": \"a.important\", \"as\": \"important\"},",
+				"    {\"prop\": \"a.user\", \"as\": \"user\"}",
+				"{\"data\": \"end\"}",
+				"",
+				"{\"count\": \"begin\"}",
+				"select",
+				"    count (*) as num",
+				"{\"count\": \"end\"}",
+				"",
+				"from",
+				"    {\"model\": \"item\", \"alias\": \"a\"}",
+				"",
+				"{\"where\": \"empty\"}",
+				"",
+				"{\"order\": \"empty\"}",
+				"",
+				"limit {\"param\": \"limit\"}",
+				"offset {\"param\": \"offset\"}"
+			]
+		}
+	],
 	"createRecord": [
 		{
 			"_model": "d.item.type",
@@ -149,6 +201,11 @@
 			"_model": "d.item.category",
 			"name": "Yellow",
 			"color": "#fffadd"
+		},
+		{
+			"_model": "objectum.role",
+			"name": "User",
+			"code": "user"
 		}
 	],
 	"updateModel": [

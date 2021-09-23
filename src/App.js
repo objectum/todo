@@ -29,6 +29,7 @@ export default function App () {
 		registration: true,
 		name: process.env.REACT_APP_NAME || "todo",
 		version: process.env.REACT_APP_VERSION,
+		siteKey: process.env.REACT_APP_SITE_KEY,
 		onCustomRender: ({content}) => {
 			if (!store.getSessionId ()) {
 				return <div>
@@ -45,7 +46,7 @@ export default function App () {
 		}
 	};
 	if (process.env.NODE_ENV === "development") {
-		opts.username = "admin";
+		opts._username = "admin";
 		opts.password = require ("crypto").createHash ("sha1").update ("admin").digest ("hex").toUpperCase ();
 		opts.locale = "ru";
 	}

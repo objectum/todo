@@ -7,8 +7,12 @@ async function _accessCreate ({store, model, data}) {
 	if (store.roleCode == "admin") {
 		return true;
 	}
-	if (["item", "t.item.file"].indexOf (model.getPath ()) > -1) {
+	if ("item" == model.getPath ()) {
 		return data.user == store.userId;
+	}
+	if ("t.item.file" == model.getPath ()) {
+		let itemRecord = await store.getRecord (data.item);
+		return itemRecord.user == store.userId;
 	}
 	return false;
 }

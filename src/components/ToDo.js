@@ -57,7 +57,6 @@ export default function ToDo () {
 		let o = record.getOpts ("category");
 		let elements = [];
 
-		console.log (record._data);
 		if (record.note) {
 			elements.push (<span key="note" className="badge badge-secondary mr-1"><i className="fas fa-sticky-note mr-1" />{i18n ("Note")}</span>);
 		}

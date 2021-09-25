@@ -57,6 +57,7 @@ export default function ToDo () {
 		let o = record.getOpts ("category");
 		let elements = [];
 
+		console.log (record._data);
 		if (record.note) {
 			elements.push (<span key="note" className="badge badge-secondary mr-1"><i className="fas fa-sticky-note mr-1" />{i18n ("Note")}</span>);
 		}
@@ -103,7 +104,9 @@ export default function ToDo () {
 				<td className="todo-star">
 					<Action icon="fas fa-times" btnClassName="btn btn-link p-0 text-danger" title={i18n ("Remove")}
 						store={store} transaction hideProgress onClick={async () => {
-							setItem (null);
+							if (record.id == item) {
+								setItem (null);
+							}
 							await store.removeRecord (record.id);
 							setItemRecords (itemRecords.filter (itemRecord => itemRecord.id != record.id));
 						}}
@@ -148,7 +151,7 @@ export default function ToDo () {
 					</table>
 				</div>
 				{item && <div className="todo-item border-left ml-2 p-2">
-					<Form store={store} rsc="record" rid={item} mid="item" autoSave>
+					<Form store={store} rsc="record" rid={item} mid="item" autoSave onSave={() => setItemRecords ([...itemRecords])}>
 						<Field property="name" hideLabel />
 						<Field property="type" dict hideLabel />
 						<Group label="Category" className="mb-1">

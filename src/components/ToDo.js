@@ -3,6 +3,7 @@
 
 import {useState, useEffect, useRef} from "react";
 import {Form, Field, JsonField, BooleanField, FileField, Group, Action, i18n} from "objectum-react";
+import TaskActions from "./TaskActions";
 import {store} from "../modules/mediator";
 
 export default function ToDo () {
@@ -89,7 +90,7 @@ export default function ToDo () {
 						<span className="fa-stack text-info"><i className="far fa-circle fa-stack-2x" />{checkEl}</span>
 					</Action>
 				</td>
-				<td className="todo-name todo-cursor" onClick={() => setItem (record.id)}>{record.name}{renderBadges (record)}</td>
+				<td className="todo-name todo-cursor" onClick={() => setItem (record.id)}>{record.done ? <s>{record.name}</s> : record.name}{renderBadges (record)}</td>
 				<td className="todo-star">
 					<Action icon={`${record.important ? "fas": "far"} fa-star`} btnClassName="btn btn-link p-0 text-primary" title={i18n ("Important")}
 						store={store} transaction hideProgress onClick={async () => {
@@ -187,6 +188,9 @@ export default function ToDo () {
 					}} />}
 				</div>}
 			</div>
+		</div>
+		<div className="mt-2">
+			<Action label="Server actions demo" icon="fas fa-cog" popupComponent={() => <TaskActions item={item} />} />
 		</div>
 	</div>;
 }

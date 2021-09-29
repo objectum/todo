@@ -4,7 +4,7 @@
 import {Store} from "objectum-client";
 import {ObjectumApp, ObjectumRoute, ModelList, Action, locales, i18n} from "objectum-react";
 import ToDo from "./components/ToDo";
-import ItemModel from "./models/ItemModel";
+import ItemModel from "./models/client/ItemModel";
 import ItemFileModel from "./models/ItemFileModel";
 import mediator from "./modules/mediator";
 import ru from "./locales/ru.json";
@@ -46,8 +46,12 @@ export default function App () {
 		}
 	};
 	if (process.env.NODE_ENV === "development") {
-		opts._username = "admin";
+/*
+		opts.username = "admin";
 		opts.password = require ("crypto").createHash ("sha1").update ("admin").digest ("hex").toUpperCase ();
+*/
+		opts.username = "user";
+		opts.password = require ("crypto").createHash ("sha1").update ("user").digest ("hex").toUpperCase ();
 		opts.locale = "ru";
 	}
 	return <ObjectumApp {...opts}>

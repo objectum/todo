@@ -27,6 +27,12 @@ export default function TaskActions ({item}) {
 					method: "csv"
 				}));
 			}} />
+			<Action label="Progress demo" icon="fas fa-spinner" disabled={!item} onClick={({progress}) => store.remote ({
+				model: "item",
+				method: "progressDemo",
+				id: item,
+				progress
+			})} />
 		</div>
 		<textarea className="form-control text-monospace mt-1" rows={10} value={csv} readOnly />
 	</div>;

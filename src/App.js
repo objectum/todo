@@ -9,6 +9,7 @@ import ItemFileModel from "./models/ItemFileModel";
 import mediator from "./modules/mediator";
 import ru from "./locales/ru.json";
 import "./css/bootstrap.css";
+import "objectum-react/lib/css/objectum.css";
 import "objectum-react/lib/fontawesome/css/all.css";
 import "./css/todo.css";
 
@@ -45,15 +46,12 @@ export default function App () {
 			}
 		}
 	};
-	if (process.env.NODE_ENV === "development") {
 /*
+	if (process.env.NODE_ENV === "development") {
 		opts.username = "admin";
 		opts.password = require ("crypto").createHash ("sha1").update ("admin").digest ("hex").toUpperCase ();
-*/
-		opts.username = "user";
-		opts.password = require ("crypto").createHash ("sha1").update ("user").digest ("hex").toUpperCase ();
-		opts.locale = "ru";
 	}
+*/
 	return <ObjectumApp {...opts}>
 		<ObjectumRoute exact path="/" render={props => {
 			return store.username == "admin" ? <div className="container"><ModelList {...props} store={store} model="item" /></div> : <ToDo {...props} />;

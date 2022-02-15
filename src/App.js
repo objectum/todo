@@ -1,6 +1,8 @@
 /* eslint-disable no-whitespace-before-property */
 /* eslint-disable eqeqeq */
 
+
+
 import {Store} from "objectum-client";
 import {ObjectumApp, ObjectumRoute, ModelList, Action, locales, i18n} from "objectum-react";
 import ToDo from "./components/ToDo";
